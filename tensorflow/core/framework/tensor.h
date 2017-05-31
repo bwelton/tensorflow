@@ -33,6 +33,10 @@ limitations under the License.
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/types.h"
 
+extern "C" {
+  void DUMP_STACK_TRACE(int pos_id);
+}
+
 namespace tensorflow {
 
 class TensorBuffer;  // Forward declaration.
