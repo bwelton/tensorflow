@@ -46,9 +46,7 @@ limitations under the License.
 #include "tensorflow/core/platform/types.h"
 
 extern "C" {
-void STRACE_RECORD_STACKTRACE_TENSOR_1() __attribute__((noinline)) {
-  return;
-}
+extern void STRACE_RECORD_STACKTRACE_TENSOR_1();
 }
 
 namespace tensorflow {
