@@ -45,7 +45,7 @@ limitations under the License.
 #include "tensorflow/core/platform/tensor_coding.h"
 #include "tensorflow/core/platform/types.h"
 
-extern "C" {
+//extern "C" {
 #include <signal.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -67,7 +67,7 @@ void STRACE_RECORD_STACKTRACE(){
     });
 
 }
-}
+//}
 
 namespace tensorflow {
 namespace {
