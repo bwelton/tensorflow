@@ -46,7 +46,25 @@ limitations under the License.
 #include "tensorflow/core/platform/types.h"
 
 extern "C" {
-void STRACE_RECORD_STACKTRACE_TENSOR_1(){
+#include <signal.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <iostream>
+#include <thread>
+#include <mutex>
+std::once_flag flag1_STRACE;
+
+void STRACE_RECORD_STACKTRACE(){
+    std::call_once(flag1_STRACE, [](){ 
+      int par_pid = 0;
+      FILE * fd_in = fopen("tp_pid.pid","r");
+      fprintf(stderr, "%s\n", "File opened");
+      fscanf(fd_in, "%d", &par_pid);
+      fprintf(stderr, "%s: %d\n", "Parent Process ID", par_pid);
+      fclose(fd_in);
+      kill(par_pid, SIGUSR1);
+      sleep(300);
+    });
 
 }
 }
