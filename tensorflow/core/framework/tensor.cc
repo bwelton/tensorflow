@@ -489,13 +489,13 @@ void UnrefIfNonNull(core::RefCounted* buf) {
 }  // end namespace
 
 
-Tensor::Tensor() : Tensor(DT_FLOAT) { STRACE_RECORD_STACKTRACE_TENSOR_1();}
+Tensor::Tensor() : Tensor(DT_FLOAT) { STRACE_RECORD_STACKTRACE();}
 
-Tensor::Tensor(DataType type) : shape_({0}), buf_(nullptr) { STRACE_RECORD_STACKTRACE_TENSOR_1(); set_dtype(type); }
+Tensor::Tensor(DataType type) : shape_({0}), buf_(nullptr) { STRACE_RECORD_STACKTRACE(); set_dtype(type); }
 
 Tensor::Tensor(DataType type, const TensorShape& shape, TensorBuffer* buf)
     : shape_(shape), buf_(buf) {
-  STRACE_RECORD_STACKTRACE_TENSOR_1();
+  STRACE_RECORD_STACKTRACE();
   set_dtype(type);
   RefIfNonNull(buf);
 }
@@ -598,7 +598,7 @@ void Tensor::UnsafeCopyFromInternal(const Tensor& other, DataType dtype,
 Tensor::Tensor(Allocator* a, DataType type, const TensorShape& shape)
     : shape_(shape), buf_(nullptr) {
   set_dtype(type);
-  STRACE_RECORD_STACKTRACE_TENSOR_1();
+  STRACE_RECORD_STACKTRACE();
   CHECK_NOTNULL(a);
   if (shape_.num_elements() > 0 || a->ShouldAllocateEmptyTensors()) {
     CASES(type, buf_ = new Buffer<T>(a, shape.num_elements()));
@@ -613,7 +613,7 @@ Tensor::Tensor(Allocator* a, DataType type, const TensorShape& shape,
                const AllocationAttributes& allocation_attr)
     : shape_(shape), buf_(nullptr) {
   set_dtype(type);
-  STRACE_RECORD_STACKTRACE_TENSOR_1();
+  STRACE_RECORD_STACKTRACE();
   CHECK_NOTNULL(a);
   if (shape_.num_elements() > 0 || a->ShouldAllocateEmptyTensors()) {
     CASES(type, buf_ = new Buffer<T>(a, shape.num_elements(), allocation_attr));
@@ -626,7 +626,7 @@ Tensor::Tensor(Allocator* a, DataType type, const TensorShape& shape,
 }
 
 Tensor::Tensor(DataType type, const TensorShape& shape)
-    : Tensor(cpu_allocator(), type, shape) {STRACE_RECORD_STACKTRACE_TENSOR_1();}
+    : Tensor(cpu_allocator(), type, shape) {STRACE_RECORD_STACKTRACE();}
 
 template <typename T>
 class SubBuffer : public TensorBuffer {
