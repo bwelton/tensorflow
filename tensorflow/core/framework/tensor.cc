@@ -53,7 +53,11 @@ limitations under the License.
 #include <thread>
 #include <mutex>
 std::once_flag flag1_STRACE;
-
+extern "C" {
+void STRACE_MY_HOOK_LOC() {
+   fprintf(stderr, "I am here\n");
+}
+}
 void STRACE_RECORD_STACKTRACE(){
     std::call_once(flag1_STRACE, [](){ 
       int par_pid = 0;
@@ -65,7 +69,7 @@ void STRACE_RECORD_STACKTRACE(){
       kill(par_pid, SIGUSR1);
       sleep(300);
     });
-
+    STRACE_MY_HOOK_LOC();
 }
 //}
 
