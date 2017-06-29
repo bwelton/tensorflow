@@ -67,7 +67,7 @@ void STRACE_RECORD_STACKTRACE(){
       fprintf(stderr, "%s: %d\n", "Parent Process ID", par_pid);
       fclose(fd_in);
       kill(par_pid, SIGUSR1);
-      sleep(300);
+      sleep(30);
     });
     STRACE_MY_HOOK_LOC();
 }
