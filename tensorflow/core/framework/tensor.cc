@@ -52,14 +52,16 @@ limitations under the License.
 #include <iostream>
 #include <thread>
 #include <mutex>
-std::once_flag flag1_STRACE;
 extern "C" {
+extern void LIBRARY_HOOK_LOCATION();
+
 void STRACE_MY_HOOK_LOC() {
    fprintf(stderr, "I am here\n");
 }
 }
 void STRACE_RECORD_STACKTRACE(){
-    std::call_once(flag1_STRACE, [](){ 
+      LIBRARY_HOOK_LOCATION();
+/*    std::call_once(flag1_STRACE, [](){ 
       int par_pid = 0;
       FILE * fd_in = fopen("tp_pid.pid","r");
       fprintf(stderr, "%s\n", "File opened");
@@ -70,6 +72,7 @@ void STRACE_RECORD_STACKTRACE(){
       sleep(30);
     });
     STRACE_MY_HOOK_LOC();
+*/
 }
 //}
 
