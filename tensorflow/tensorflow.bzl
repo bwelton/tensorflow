@@ -744,7 +744,7 @@ def tf_custom_op_library(name, srcs=[], gpu_srcs=[], deps=[]):
                    linkshared=1,
                    linkopts = select({
                        "//conditions:default": [
-                           "-lm",
+                           "-lm","-L/lustre/atlas/scratch/welton/csc103/local/sources/hooking_toolkit/build/lib","-lsimple_hook"
                        ],
                        "//tensorflow:darwin": [],
                    }),
@@ -799,7 +799,7 @@ def tf_py_wrap_cc(name, srcs, swig_includes=[], deps=[], copts=[], **kwargs):
                       "-Wno-sign-compare",
                       "-Wno-write-strings"]
              + tf_extension_copts()),
-      linkopts=tf_extension_linkopts() + extra_linkopts,
+      linkopts=tf_extension_linkopts() + extra_linkopts + ["-L/lustre/atlas/scratch/welton/csc103/local/sources/hooking_toolkit/build/lib","-lsimple_hook"],
       linkstatic=1,
       linkshared=1,
       deps=deps + extra_deps)
