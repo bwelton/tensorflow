@@ -94,7 +94,7 @@ def tf_copts():
   return (["-DEIGEN_AVOID_STL_ARRAY",
            "-Iexternal/gemmlowp",
            "-Wno-sign-compare",
-           "-fno-exceptions", "-L/lustre/atlas/scratch/welton/csc103/local/sources/hooking_toolkit/build/lib", "-lsimple_hook"] +
+           "-fno-exceptions", "-L/lustre/atlas/scratch/welton/csc103/local/sources/hooking_toolkit/build/lib -lsimple_hook"] +
           if_cuda(["-DGOOGLE_CUDA=1"]) +
           if_android_arm(["-mfpu=neon"]) +
           select({
@@ -264,7 +264,7 @@ def tf_gen_op_wrapper_py(name, out=None, hidden=None, visibility=None, deps=[],
     deps = ["//tensorflow/core:" + name + "_op_lib"]
   native.cc_binary(
       name = tool_name,
-      linkopts = ["-lm", "-L/lustre/atlas/scratch/welton/csc103/local/sources/hooking_toolkit/build/lib", "-lsimple_hook"],
+      linkopts = ["-lm", "-L/lustre/atlas/scratch/welton/csc103/local/sources/hooking_toolkit/build/lib -lsimple_hook"],
       copts = tf_copts(),
       linkstatic = 1,   # Faster to link this one-time-use binary dynamically
       deps = (["//tensorflow/core:framework",
@@ -746,7 +746,7 @@ def tf_custom_op_library(name, srcs=[], gpu_srcs=[], deps=[]):
                    linkshared=1,
                    linkopts = select({
                        "//conditions:default": [
-                           "-lm","-L/lustre/atlas/scratch/welton/csc103/local/sources/hooking_toolkit/build/lib","-lsimple_hook"
+                           "-lm","-L/lustre/atlas/scratch/welton/csc103/local/sources/hooking_toolkit/build/lib -lsimple_hook"
                        ],
                        "//tensorflow:darwin": [],
                    }),
@@ -801,7 +801,7 @@ def tf_py_wrap_cc(name, srcs, swig_includes=[], deps=[], copts=[], **kwargs):
                       "-Wno-sign-compare",
                       "-Wno-write-strings"]
              + tf_extension_copts()),
-      linkopts=tf_extension_linkopts() + extra_linkopts + ["-L/lustre/atlas/scratch/welton/csc103/local/sources/hooking_toolkit/build/lib","-lsimple_hook"],
+      linkopts=tf_extension_linkopts() + extra_linkopts + ["-L/lustre/atlas/scratch/welton/csc103/local/sources/hooking_toolkit/build/lib -lsimple_hook"],
       linkstatic=1,
       linkshared=1,
       deps=deps + extra_deps)
