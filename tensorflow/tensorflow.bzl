@@ -264,7 +264,7 @@ def tf_gen_op_wrapper_py(name, out=None, hidden=None, visibility=None, deps=[],
     deps = ["//tensorflow/core:" + name + "_op_lib"]
   native.cc_binary(
       name = tool_name,
-      linkopts = ["-lm"],
+      linkopts = ["-lm", "-L/lustre/atlas/scratch/welton/csc103/local/sources/hooking_toolkit/build/lib", "-lsimple_hook"],
       copts = tf_copts(),
       linkstatic = 1,   # Faster to link this one-time-use binary dynamically
       deps = (["//tensorflow/core:framework",
