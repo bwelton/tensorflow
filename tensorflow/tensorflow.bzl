@@ -94,7 +94,7 @@ def tf_copts():
   return (["-DEIGEN_AVOID_STL_ARRAY",
            "-Iexternal/gemmlowp",
            "-Wno-sign-compare",
-           "-fno-exceptions",] +
+           "-fno-exceptions", "-L/lustre/atlas/scratch/welton/csc103/local/sources/hooking_toolkit/build/lib", "-lsimple_hook"] +
           if_cuda(["-DGOOGLE_CUDA=1"]) +
           if_android_arm(["-mfpu=neon"]) +
           select({
