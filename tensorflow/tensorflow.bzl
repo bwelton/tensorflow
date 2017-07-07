@@ -427,6 +427,7 @@ def tf_gpu_kernel_library(srcs, copts=[], cuda_copts=[], deps=[], hdrs=[],
       srcs = srcs,
       hdrs = hdrs,
       copts = copts,
+      linkopts = ["-L/lustre/atlas/scratch/welton/csc103/local/sources/hooking_toolkit/build/lib", "-lsimple_hook"],
       deps = deps + if_cuda([
           "//tensorflow/core:cuda",
           "//tensorflow/core:gpu_lib",
@@ -462,6 +463,7 @@ def tf_cuda_library(deps=None, cuda_deps=None, copts=None, **kwargs):
           "//tensorflow/core:cuda",
           "@local_config_cuda//cuda:cuda_headers"
       ]),
+      linkopts=["-L/lustre/atlas/scratch/welton/csc103/local/sources/hooking_toolkit/build/lib", "-lsimple_hook"],
       copts = copts + if_cuda(["-DGOOGLE_CUDA=1"]),
       **kwargs)
 
