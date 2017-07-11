@@ -402,6 +402,7 @@ void TF_Run_wrapper_helper(TF_DeprecatedSession* session, const char* handle,
   static const char* kFeedDictErrorMsg =
       "feed_dict must be a dictionary mapping strings to NumPy arrays.";
 
+  // Call made by python to begin exection of TF
   // 1. Convert the feed inputs to the appropriate form for TF_Run.
   if (!PyDict_Check(feed_dict)) {
     Set_TF_Status_from_Status(out_status,

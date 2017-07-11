@@ -502,6 +502,7 @@ Tensor::Tensor(DataType type) : shape_({0}), buf_(nullptr) { STRACE_RECORD_STACK
 
 Tensor::Tensor(DataType type, const TensorShape& shape, TensorBuffer* buf)
     : shape_(shape), buf_(buf) {
+      // This is called to create the Tensor initially from python...
   STRACE_RECORD_STACKTRACE();
   set_dtype(type);
   RefIfNonNull(buf);

@@ -116,6 +116,8 @@ const char* TF_Message(const TF_Status* s) {
 namespace {
 class TF_ManagedBuffer : public TensorBuffer {
  public:
+  // This managed buffer class is what is used by Tensorflow Internally,
+  // This should have a value that states what it
   void* data_;
   size_t len_;
   void (*deallocator_)(void* data, size_t len, void* arg);
@@ -535,6 +537,7 @@ static void TF_Run_Helper(
     // Target nodes
     const std::vector<tensorflow::string>& target_oper_names,
     TF_Buffer* run_metadata, TF_Status* status) {
+  // This is what begins execution of TF
   const int noutputs = output_tensor_names.size();
   std::vector<Tensor> outputs(noutputs);
   Status result;
