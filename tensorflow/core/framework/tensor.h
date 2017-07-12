@@ -474,11 +474,21 @@ class Tensor {
 // Implementation details
 
 // START_SKIP_DOXYGEN
-
+#include <time.h>
 // Interface to access the raw ref-counted data buffer.
 class TensorBuffer : public core::RefCounted {
  public:
   ~TensorBuffer() override {}
+  int unique_id_;
+  void SetUniqueID(int i) {
+  unique_id_ = i;
+  }
+  void SetUniqueID(void) {
+  unique_id_ = rand();
+  }
+  int GetUniqueID(void) {
+  return unique_id_;
+  }
 
   // data() points to a memory region of size() bytes.
   virtual void* data() const = 0;

@@ -120,19 +120,11 @@ class TF_ManagedBuffer : public TensorBuffer {
   // This should have a value that states what it
   void* data_;
   size_t len_;
-  int unique_id_;
+
   void (*deallocator_)(void* data, size_t len, void* arg);
   void* deallocator_arg_;
 
-  void SetUniqueID(int i) {
-	unique_id_ = i;
-  }
-  void SetUniqueID(void) {
-	unique_id_ = rand();
-  }
-  int GetUniqueID(void) {
-	return unique_id_;
-  }
+
   ~TF_ManagedBuffer() override {
     (*deallocator_)(data_, len_, deallocator_arg_);
   }
