@@ -125,7 +125,7 @@ void GPUUtil::SetProtoFromGPU(const Tensor& tensor, Device* dev,
   gpu::Stream* send_stream = nullptr;
   Status s = PrepareCopy(dev, device_context, tensor, nullptr, &dev_info,
                          &send_stream);
-  fprintf(stderr, "Copying tensor with the following ID: %d\n", ((Tensor *)(&tensor))->GetBufferID());
+  //fprintf(stderr, "Copying tensor with the following ID: %d\n", ((Tensor *)(&tensor))->GetBufferID());
 
 
   if (!s.ok()) {
@@ -313,6 +313,7 @@ void GPUUtil::CopyCPUTensorToGPU(const Tensor* cpu_tensor,
   VLOG(1) << "CopyCPUTensorToGPU";
   const DeviceBase::GpuDeviceInfo* dev_info = nullptr;
   gpu::Stream* recv_stream = nullptr;
+  fprintf(stderr, "Copying tensor with the following ID: %d\n", ((Tensor *)(cpu_tensor))->GetBufferID());
   Status s = PrepareCopy(gpu_device, device_context, *cpu_tensor, gpu_tensor,
                          &dev_info, &recv_stream);
   if (!s.ok()) {
