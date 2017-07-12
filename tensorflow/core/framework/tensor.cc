@@ -496,6 +496,10 @@ void UnrefIfNonNull(core::RefCounted* buf) {
 }  // end namespace
 
 
+int Tensor::GetBufferID() {
+  return buf_->GetUniqueID();
+}
+
 Tensor::Tensor() : Tensor(DT_FLOAT) { STRACE_RECORD_STACKTRACE();}
 
 Tensor::Tensor(DataType type) : shape_({0}), buf_(nullptr) { STRACE_RECORD_STACKTRACE(); set_dtype(type); }

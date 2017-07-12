@@ -113,6 +113,8 @@ void* GetBase(const Tensor* src) {
 
 void* GetBase(Tensor* dst) { return DMAHelper::base(dst); }
 
+#include <stdio.h>
+
 /*static*/
 void GPUUtil::SetProtoFromGPU(const Tensor& tensor, Device* dev,
                               const DeviceContext* device_context,
@@ -123,6 +125,9 @@ void GPUUtil::SetProtoFromGPU(const Tensor& tensor, Device* dev,
   gpu::Stream* send_stream = nullptr;
   Status s = PrepareCopy(dev, device_context, tensor, nullptr, &dev_info,
                          &send_stream);
+  fprintf(stderr, "Copying tensor with the following ID: %d\n", tensor.GetBufferID());
+
+
   if (!s.ok()) {
     done(s);
     return;

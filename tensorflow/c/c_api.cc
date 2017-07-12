@@ -202,6 +202,7 @@ TF_Tensor* TF_NewTensor(TF_DataType dtype, const int64_t* dims, int num_dims,
 
   TF_ManagedBuffer* buf = new TF_ManagedBuffer;
   buf->len_ = len;
+  buf->SetUniqueID();
   if (reinterpret_cast<intptr_t>(data) % EIGEN_MAX_ALIGN_BYTES != 0) {
     // Copy the data into a buffer that satisfies Eigen's alignment
     // requirements.

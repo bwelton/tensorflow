@@ -135,6 +135,7 @@ class Tensor {
     return shape().IsSameSize(b.shape());
   }
 
+  int GetBufferID();
   // True iff the two tensors use the same underlying refcounted storage
   bool SharesBufferWith(const Tensor& b) const;
 
@@ -481,13 +482,13 @@ class TensorBuffer : public core::RefCounted {
   ~TensorBuffer() override {}
   int unique_id_;
   void SetUniqueID(int i) {
-  unique_id_ = i;
+    unique_id_ = i;
   }
   void SetUniqueID(void) {
-  unique_id_ = rand();
+    unique_id_ = rand();
   }
   int GetUniqueID(void) {
-  return unique_id_;
+    return unique_id_;
   }
 
   // data() points to a memory region of size() bytes.
