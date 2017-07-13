@@ -497,6 +497,9 @@ void UnrefIfNonNull(core::RefCounted* buf) {
 
 
 int Tensor::GetBufferID() {
+  if (buf_ == NULL)
+	return -1;
+  
   return buf_->GetUniqueID();
 }
 
