@@ -634,7 +634,7 @@ void TF_PRunSetup(TF_DeprecatedSession* s,
                   const char** c_target_oper_names, int ntargets,
                   const char** handle, TF_Status* status) {
   status->status = Status::OK();
-
+  fprintf(stderr,"Entering PRun\n");
   std::vector<tensorflow::string> input_names(ninputs);
   std::vector<tensorflow::string> output_names(noutputs);
   std::vector<tensorflow::string> target_oper_names(ntargets);

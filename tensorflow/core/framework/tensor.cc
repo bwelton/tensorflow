@@ -537,6 +537,7 @@ void Tensor::CopyFromInternal(const Tensor& other, const TensorShape& shape) {
   CHECK_EQ(shape.num_elements(), other.NumElements());
   // Data type will be overwritten if this == &other, since dtype is part of
   // shape.
+  fprintf(stderr, "Copying from internal tensor\n")
   DataType other_dtype = other.dtype();
   shape_ = shape;
   set_dtype(other_dtype);
@@ -549,6 +550,7 @@ void Tensor::CopyFromInternal(const Tensor& other, const TensorShape& shape) {
 
 void Tensor::UnsafeCopyFromInternal(const Tensor& other, DataType dtype,
                                     const TensorShape& shape) {
+  fprintf(stderr, "Copying from internal tensor unsafe\n")
   int in_size = DataTypeSize(other.dtype());
   int out_size = DataTypeSize(dtype);
   CHECK_NE(in_size, 0);
