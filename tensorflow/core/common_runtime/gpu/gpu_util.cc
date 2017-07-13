@@ -305,6 +305,11 @@ void GPUUtil::CopyGPUTensorToCPU(Device* gpu_device,
       });
 }
 
+extern "C" {
+  void TRACK_COPIES(int identifier, int64 transfer);
+
+}
+
 /*  static */
 void GPUUtil::CopyCPUTensorToGPU(const Tensor* cpu_tensor,
                                  const DeviceContext* device_context,
@@ -333,6 +338,8 @@ void GPUUtil::CopyCPUTensorToGPU(const Tensor* cpu_tensor,
   recv_host_to_device_stream->ThenWaitFor(recv_stream);
   fprintf(stderr, "Copying tensor with the following ID: %d\n", ((Tensor *)(cpu_tensor))->GetBufferID());
   const int64 total_bytes = cpu_tensor->TotalBytes();
+  TRACK_COPIES(((Tensor *)(cpu_tensor))->GetBufferID(), total_bytes);
+  
   // Note that 0-size tensors have no backing buffer.
   if (total_bytes > 0) {
     void* src_ptr = GetBase(cpu_tensor);
