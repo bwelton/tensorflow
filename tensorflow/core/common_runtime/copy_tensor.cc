@@ -44,7 +44,7 @@ std::vector<RegistrationInfo>* MutableRegistry() {
 }
 
 }  // namespace
-
+#include <iostream>
 // static
 void CopyTensor::ViaDMA(StringPiece edge_name, DeviceContext* send_dev_context,
                         DeviceContext* recv_dev_context, Device* src,
@@ -70,17 +70,19 @@ void CopyTensor::ViaDMA(StringPiece edge_name, DeviceContext* send_dev_context,
     for (const RegistrationInfo& ri : *registry) {
       if (ri.sender_device_type == src_device_type &&
           ri.receiver_device_type == dst_device_type) {
+        fprintf(stderr, "Found device to device copy\n");
         ri.copy_function(send_dev_context, recv_dev_context, src, dst,
                          src_alloc_attr, dst_alloc_attr, input, output, done);
         return;
       }
     }
-
+    fprintf(stderr, "Fallback device to device copy\n");
     // Fall back to copying via the host.
-    VLOG(1) << "No function registered to copy from devices of type "
+    std::cerr << "No function registered to copy from devices of type "
             << src_device_type.type() << " to devices of type "
             << dst_device_type.type()
-            << ". Falling back to copying via the host.";
+            << ". Falling back to copying via the host." << std::endl;
+
 
     // TODO(phawkins): choose an allocator optimal for both the src and dst
     // devices, not just the src device.
