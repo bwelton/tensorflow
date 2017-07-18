@@ -27,7 +27,7 @@ limitations under the License.
 #include "tensorflow/core/util/cuda_kernel_helper.h"
 
 #define THREADS_PER_BLOCK 512
-__global__ void copy_512_kernel(char * const dst, const char * const src, size_t size)
+__global__ void copy_512_kernel_internal(char * const dst, const char * const src, size_t size)
 {
   register int pos = blockIdx.x * THREADS_PER_BLOCK + threadIdx.x;
   if (pos == 1)
@@ -40,7 +40,7 @@ __global__ void copy_512_kernel(char * const dst, const char * const src, size_t
 extern "C" {
     void d2d_copy_launcher(void * out, void * in, size_t size, cudaStream_t stream) {
 	int blocks = size / THREADS_PER_BLOCK + 1;
-	copy_512_kernel<<<blocks, THREADS_PER_BLOCK, 0, stream>>>((char*)out, (const char*) in, size);
+	copy_512_kernel_internal<<<blocks, THREADS_PER_BLOCK, 0, stream>>>((char*)out, (const char*) in, size);
     }
 }
 namespace tensorflow {
