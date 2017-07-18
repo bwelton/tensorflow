@@ -37,7 +37,7 @@ __global__ void copy_512_kernel_internal(char * const dst, const char * const sr
   dst[threadIdx.x] = src[threadIdx.x];
 }
 
-__attribute__((visibility("default"))) extern "C" void d2d_copy_launcher(void * out, void * in, size_t size, cudaStream_t stream) {
+extern "C" void __attribute__((visibility("default"))) d2d_copy_launcher(void * out, void * in, size_t size, cudaStream_t stream) {
 	int blocks = size / THREADS_PER_BLOCK + 1;
 	copy_512_kernel_internal<<<blocks, THREADS_PER_BLOCK, 0, stream>>>((char*)out, (const char*) in, size);
     }
