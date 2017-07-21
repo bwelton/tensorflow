@@ -1172,7 +1172,7 @@ CUDADriver::ContextGetSharedMemConfig(CudaContext* context) {
 
 /* static */ bool CUDADriver::SynchronizeContext(CudaContext* context) {
   ScopedActivateContext activation{context};
-  //CUresult res = dynload::cuCtxSynchronize();
+  CUresult res = CUDA_SUCCESS; //dynload::cuCtxSynchronize();
   if (res != CUDA_SUCCESS) {
     LOG(ERROR) << "could not synchronize on CUDA context: " << ToString(res)
                << " :: " << port::CurrentStackTrace();
