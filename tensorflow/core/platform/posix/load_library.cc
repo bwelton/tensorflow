@@ -24,7 +24,7 @@ namespace tensorflow {
 namespace internal {
 
 Status LoadLibrary(const char* library_filename, void** handle) {
-  *handle = dlopen(library_filename, RTLD_NOW | RTLD_LOCAL);
+  *handle = dlopen(library_filename, RTLD_NOW | RTLD_GLOBAL);
   if (!*handle) {
     return errors::NotFound(dlerror());
   }

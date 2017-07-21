@@ -26,6 +26,21 @@ limitations under the License.
 #include "tensorflow/core/kernels/cuda_device_array_gpu.h"
 #include "tensorflow/core/util/cuda_kernel_helper.h"
 
+#define THREADS_PER_BLOCK 512
+__global__ void copy_512_kernel_internal(char * const dst, const char * const src, size_t size)
+{
+  register int pos = blockIdx.x * THREADS_PER_BLOCK + threadIdx.x;
+  if (pos == 1)
+  	printf("I am in the copy kernel\n");
+  if (pos > size)
+  		return;
+  dst[threadIdx.x] = src[threadIdx.x];
+}
+
+extern "C" void __attribute__((visibility("default"))) d2d_copy_launcher(void * out, void * in, size_t size, cudaStream_t stream) {
+	int blocks = size / THREADS_PER_BLOCK + 1;
+	copy_512_kernel_internal<<<blocks, THREADS_PER_BLOCK, 0, stream>>>((char*)out, (const char*) in, size);
+    }
 namespace tensorflow {
 
 typedef Eigen::GpuDevice GPUDevice;
