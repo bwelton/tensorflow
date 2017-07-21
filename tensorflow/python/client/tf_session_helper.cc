@@ -490,7 +490,7 @@ void TF_Run_wrapper_helper(TF_DeprecatedSession* session, const char* handle,
   // 2. Allocate a container for the output data.
   TF_TensorVector outputs(output_names.size());
 
-  fprintf(stderr, "Number of tensors to be computed: %llu, Number of outputs expected: %llu\n", inputs_unsafe.size(), output_names.size());
+  //fprintf(stderr, "Number of tensors to be computed: %llu, Number of outputs expected: %llu\n", inputs_unsafe.size(), output_names.size());
   // 3. Actually call TF_Run().
   Py_BEGIN_ALLOW_THREADS;
   if (handle == nullptr) {

@@ -318,8 +318,8 @@ void GPUUtil::CopyCPUTensorToGPU(const Tensor* cpu_tensor,
   VLOG(1) << "CopyCPUTensorToGPU";
   const DeviceBase::GpuDeviceInfo* dev_info = nullptr;
   gpu::Stream* recv_stream = nullptr;
-  if (cpu_tensor != NULL)
-	  fprintf(stderr, "Copying tensor with the following ID: %d\n", ((Tensor *)(cpu_tensor))->GetBufferID());
+  // if (cpu_tensor != NULL)
+	 //  fprintf(stderr, "Copying tensor with the following ID: %d\n", ((Tensor *)(cpu_tensor))->GetBufferID());
   Status s = PrepareCopy(gpu_device, device_context, *cpu_tensor, gpu_tensor,
                          &dev_info, &recv_stream);
   if (!s.ok()) {
@@ -336,7 +336,7 @@ void GPUUtil::CopyCPUTensorToGPU(const Tensor* cpu_tensor,
   }
   // Wait for the recv-stream to make sure the buffer is truely available.
   recv_host_to_device_stream->ThenWaitFor(recv_stream);
-  fprintf(stderr, "Copying tensor with the following ID: %d\n", ((Tensor *)(cpu_tensor))->GetBufferID());
+  //fprintf(stderr, "Copying tensor with the following ID: %d\n", ((Tensor *)(cpu_tensor))->GetBufferID());
   const int64 total_bytes = cpu_tensor->TotalBytes();
   //TRACK_COPIES(((Tensor *)(cpu_tensor))->GetBufferID(),int64_t(total_bytes));
   
