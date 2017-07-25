@@ -117,7 +117,7 @@ class EigenCudaStreamDevice : public ::Eigen::StreamInterface {
     }
     AsyncFreeData* afData =
         new AsyncFreeData(allocator_, buffer, operation_, step_id_);
-    //cudaStreamSynchronize(*stream_);
+    cudaStreamSynchronize(*stream_);
     asyncFree(*stream_, cudaSuccess, (void *)afData);
     //cudaError_t err = cudaStreamAddCallback(*stream_, asyncFree, afData, 0);
     //CHECK_EQ(err, cudaSuccess);
