@@ -374,9 +374,9 @@ namespace {
 
 // Call cuCtxtSynchronize and crash if it doesn't succeed.
 void SynchronizeOrDie() {
-  //auto res = CUDA_SUCCESS;//dynload::cuCtxSynchronize();
+  auto res = CUDA_SUCCESS;//dynload::cuCtxSynchronize();
 
-  auto res = dynload::cuCtxSynchronize();
+  //auto res = dynload::cuCtxSynchronize();
   if (res != CUDA_SUCCESS) {
     LOG(FATAL) << "Synchronize found "
                << ToString(res) << " :: " << port::CurrentStackTrace();
@@ -1174,9 +1174,9 @@ CUDADriver::ContextGetSharedMemConfig(CudaContext* context) {
 
 /* static */ bool CUDADriver::SynchronizeContext(CudaContext* context) {
   ScopedActivateContext activation{context};
-  CUresult res = dynload::cuCtxSynchronize();
+  //CUresult res = dynload::cuCtxSynchronize();
 
-  //CUresult res = CUDA_SUCCESS;//dynload::cuCtxSynchronize();
+  CUresult res = CUDA_SUCCESS;//dynload::cuCtxSynchronize();
   if (res != CUDA_SUCCESS) {
     LOG(ERROR) << "could not synchronize on CUDA context: " << ToString(res)
                << " :: " << port::CurrentStackTrace();
